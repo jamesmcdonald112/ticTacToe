@@ -1,11 +1,9 @@
 package tictactoe;
 
-import java.util.Scanner;
-
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        String userInput = scanner.nextLine();
+        // Get user input
+        String userInput = UserInput.getUserInput();
 
         // Break input into three lines
         String firstLine = userInput.substring(0, 3);
@@ -13,35 +11,16 @@ public class Main {
         String thirdLine = userInput.substring(6);
 
         // Format the lines
-        String formattedFirstLine = formatLine(firstLine);
-        String formattedSecondLine = formatLine(secondLine);
-        String formattedThirdLine = formatLine(thirdLine);
+        String tableWithDash = CreateTable.createFormattedTable(firstLine, secondLine, thirdLine);
+        // Table with just X and O, no dashes
+        System.out.println(tableWithDash);
 
-        System.out.println(createTable(formattedFirstLine, formattedSecondLine, formattedThirdLine));
+        // Create matrix of table
+        char[][] tableMatrix = MatrixCreator.createMatrix(userInput);
 
+        System.out.println(AnalyseGame.analyseGame(tableMatrix));
     }
 
-    private static String dashes() {
-        return "---------\n";
-    }
 
-    private static String formatLine(String lineInput) {
-        char first = lineInput.charAt(0);
-        char second = lineInput.charAt(1);
-        char third = lineInput.charAt(2);
-
-        return String.format("| %c %c %c |\n", first, second, third);
-    }
-
-    private static String createTable(String firstLine,String secondLine, String thirdLine) {
-        StringBuilder table = new StringBuilder();
-        table.append(dashes());
-        table.append(firstLine);
-        table.append(secondLine);
-        table.append(thirdLine);
-        table.append(dashes());
-        return table.toString();
-
-    }
 }
 

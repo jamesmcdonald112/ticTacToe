@@ -317,6 +317,21 @@ files:
           }
       }
     learner_created: false
-feedback_link: https://hyperskill.org/projects/48/stages/257/implement#comment
-status: Unchecked
+  - name: src/tictactoe/CreateTable.java
+    visible: true
+    learner_created: true
+  - name: src/tictactoe/UserInput.java
+    visible: true
+    learner_created: true
+  - name: src/tictactoe/AnalyseGame.java
+    visible: true
+    learner_created: true
+  - name: src/tictactoe/MatrixCreator.java
+    visible: true
+    learner_created: true
+feedback_link: https://hyperskill.org/learn/step/5399#comment
+status: Solved
+feedback:
+  message: Congratulations!
+  time: "Wed, 03 Jul 2024 16:37:47 UTC"
 record: -1
