@@ -23,9 +23,11 @@ b
 2Topics/Multidimensional array/Cinema/src/Main.java,a/a/aa404a4e0cee1c533a59ca423b06134808ecb9ff
 m
 =Simple Tic-Tac-Toe (Java)/task/src/tictactoe/CreateTable.java,2/2/22d929144e5b087a229e49d51fb50664c3556caa
-o
-?Simple Tic-Tac-Toe (Java)/task/src/tictactoe/MatrixCreator.java,a/1/a11434ae4e6786ff2a557a31b562529b401df3aa
 k
 ;Simple Tic-Tac-Toe (Java)/task/src/tictactoe/UserInput.java,e/8/e84e2ea44b6ea04525ddf2aefabdb6e8f8738096
 m
 =Simple Tic-Tac-Toe (Java)/task/src/tictactoe/AnalyseGame.java,4/3/431cc9933334e3ab1cdd904011e23250f3abe63c
+l
+<Simple Tic-Tac-Toe (Java)/task/src/tictactoe/PrintTable.java,0/c/0c374a597c0009c0d656b39a711e8575146e26a1
+j
+:Simple Tic-Tac-Toe (Java)/task/src/tictactoe/PlayGame.java,c/c/cc563f5a128e47fa66a73672c6c2abf2c0192309

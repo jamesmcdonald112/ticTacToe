@@ -1,7 +1,5 @@
 
 \
-java:S1118":Add a private constructor to hide the implicit public one.(Ú‹ÓÞüÿÿÿÿ8˜ŸæÅ‡2
+java:S1118":Add a private constructor to hide the implicit public one.(Ú‹ÓÞüÿÿÿÿ8×÷çë‡2
 [
-java:S3400)"9Remove this method and declare a constant for this value.(ð¨¤þùÿÿÿÿ8šŸæÅ‡2
-s
-java:S34578"Q%n should be used in place of \n to produce the platform-specific line separator.(â·ŸÄþÿÿÿÿ8›ŸæÅ‡2
+java:S3400L"9Remove this method and declare a constant for this value.(ð¨¤þùÿÿÿÿ8Ú÷çë‡2

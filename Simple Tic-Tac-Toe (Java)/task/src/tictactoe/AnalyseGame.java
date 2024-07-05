@@ -5,28 +5,39 @@ public class AnalyseGame {
     /**
      * Analyses the state of the game and provides feedback for the user:
      *
-     * - Impossible: The game has a state that has broken rules such as two winners or one player
-     * has many more entries than the other
-     * - X wins: Player 'X' wins
-     * - O wins: Player 'O' wins
-     * - Draw: The table is filled but there is no winner
-     * - Game not finished: The game is still in play
+     * - Impossible
+     * - X wins
+     * - O wins
+     * - Draw
+     * - Game not finished
      *
      * @param table The table to be analysed
      * @return A String with the state of the game.
      */
-    public static String analyseGame(char[][] table) {
+    public static GameState analyseGame(char[][] table) {
         if (impossible(table)) {
-            return "Impossible";
+            return GameState.IMPOSSIBLE;
         } else if (xWins(table)) {
-            return "X wins";
+            return GameState.X_WINS;
         } else if (oWins(table)) {
-            return "O wins";
+            return GameState.O_WINS;
         } else if (Draw(table)) {
-            return "Draw";
+            return GameState.DRAW;
         } else {
-            return "Game not finished";
+            return GameState.GAME_NOT_FINISHED;
         }
+    }
+
+    /**
+     * The current state of the table analysed by analyseGame(char[][] table) method. An enum of
+     * the game state is return and compared to GameState.GAME_NOT_FINISHED. If it is true, then
+     * the game should continue.
+     *
+     * @param table The table to be analysed
+     * @return True if the game should continue; false otherwise.
+     */
+    public static boolean isGameContinuing(char[][] table) {
+        return analyseGame(table) == GameState.GAME_NOT_FINISHED;
     }
 
     /**
@@ -89,7 +100,7 @@ public class AnalyseGame {
     }
 
     /**
-     * Checks to see ig player 'O' wins
+     * Checks to see if player 'O' wins
      *
      * @param table The table to check
      * @return True if 'O' wins; false otherwise

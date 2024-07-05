@@ -3,6 +3,22 @@ package tictactoe;
 public class CreateTable {
 
     /**
+     * Creates an 'empty table' matrix sized 3x3, where the table is filled with the space char ' '.
+     *
+     * @return The empty table as a char[][].
+     */
+    public static char[][] createEmptyTable() {
+        // Create a matrix of size 3 * 3
+        char[][] table = new char[3][3];
+        char emptyCharacter = ' ';
+        for (int row = 0; row < table.length; row++) {
+            for (int col = 0; col < table[row].length; col++) {
+                table[row][col] = emptyCharacter;
+            }
+        }
+        return table;
+    }
+    /**
      * Takes first, second, and third row of the current game can creates a formatted table.
      * Dashes are added above and below, pipes are added on either side on the table and the
      * characters a spaced out from each other.

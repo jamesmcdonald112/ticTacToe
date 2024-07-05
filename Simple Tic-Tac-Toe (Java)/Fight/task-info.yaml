@@ -455,6 +455,418 @@ files:
           }
       }
     learner_created: false
+  - name: src/tictactoe/UserInput.java
+    visible: true
+    text: |+
+      package tictactoe;
+      
+      import java.util.Scanner;
+      
+      
+      public class UserInput {
+          // INSTANCE VARIABLES
+          private static final Scanner scanner = new Scanner(System.in);
+      
+          /**
+           * Gets the input from the user using scanner.
+           *
+           * @return The user input as a String
+           */
+          public static String getUserInput() {
+              return scanner.nextLine();
+          }
+      
+      
+      
+      
+      }
+    
+    learner_created: true
+  - name: src/tictactoe/CreateTable.java
+    visible: true
+    text: |
+      package tictactoe;
+      
+      public class CreateTable {
+      
+          /**
+           * Takes first, second, and third row of the current game can creates a formatted table.
+           * Dashes are added above and below, pipes are added on either side on the table and the
+           * characters a spaced out from each other.
+           *
+           * @param tableMatrix the table to be formatted
+           * @return The formatted table
+           */
+          public static String createFormattedTable(char[][] tableMatrix) {
+              // Create table variable
+              StringBuilder table = new StringBuilder();
+              // Add to StringBuilder
+              table.append(dashes());
+      
+              // Add the elements of the matrix to the String builder
+              for (int row = 0; row < tableMatrix.length; row++) {
+                  table.append("| ");
+                  for (int col = 0; col < tableMatrix[row].length; col++) {
+                      table.append(tableMatrix[row][col]).append(" ");
+                  }
+                  // After a row is filled, it goes to a new line
+                  table.append("|\n");
+              }
+      
+             // Dashes appended to the bottom line
+              table.append(dashes());
+              return table.toString();
+      
+          }
+      
+      
+          /**
+           * Creates and returns a String of dashed lines
+           *
+           * @return A string of dashes
+           */
+          private static String dashes() {
+              return "---------\n";
+          }
+      
+      }
+    learner_created: true
+  - name: src/tictactoe/AnalyseGame.java
+    visible: true
+    text: |-
+      package tictactoe;
+      
+      public class AnalyseGame {
+      
+          /**
+           * Analyses the state of the game and provides feedback for the user:
+           *
+           * - Impossible: The game has a state that has broken rules such as two winners or one player
+           * has many more entries than the other
+           * - X wins: Player 'X' wins
+           * - O wins: Player 'O' wins
+           * - Draw: The table is filled but there is no winner
+           * - Game not finished: The game is still in play
+           *
+           * @param table The table to be analysed
+           * @return A String with the state of the game.
+           */
+          public static String analyseGame(char[][] table) {
+              if (impossible(table)) {
+                  return "Impossible";
+              } else if (xWins(table)) {
+                  return "X wins";
+              } else if (oWins(table)) {
+                  return "O wins";
+              } else if (Draw(table)) {
+                  return "Draw";
+              } else {
+                  return "Game not finished";
+              }
+          }
+      
+          /**
+           * Checks if the state of the game is braking the rules, such as two winners or one player
+           * has many more entries than the other.
+           *
+           * @param table The table to be checked
+           * @return True if it is impossible, false otherwise
+           */
+          private static boolean impossible(char[][] table) {
+              // If both 'X' and 'O' have three in a row, that is not a possible outcome
+              if (isWinner(table, 'X') && isWinner(table, 'O')) {
+                  return true;
+              }
+      
+              int countX = 0;
+              int countO = 0;
+      
+              // Iterate through the whole table
+              for (int row = 0; row < table.length; row++) {
+                  for (int col = 0; col < table[row].length; col++) {
+                      if (table[row][col] == 'X') {
+                          countX++;
+                      } else if (table[row][col] == 'O') {
+                          countO++;
+                      }
+      
+                  }
+              }
+      
+              // If there are more than 1 symbols in the difference, then this is impossible
+              if (Math.abs(countX - countO) > 1) {
+                  return true;
+              }
+      
+              return false;
+          }
+      
+          /**
+           * Checks the state of the game to see if it is a draw. It does so my seeing if the table is
+           * filled with 'X's and 'O's without a winner.
+           *
+           * @param table The table to be checked
+           * @return True if it is a draw; false otherwise
+           */
+          private static boolean Draw(char[][] table) {
+              boolean isFull = true;
+              boolean hasWinner;
+              for (int row = 0; row < table.length; row++) {
+                  for (int col = 0; col < table[row].length; col++) {
+                      if (table[row][col] == ' ' || table[row][col] == '_') {
+                          isFull = false;
+                      }
+                  }
+              }
+      
+              hasWinner = isWinner(table, 'X') || isWinner(table, 'O');
+      
+              return isFull && !hasWinner;
+          }
+      
+          /**
+           * Checks to see ig player 'O' wins
+           *
+           * @param table The table to check
+           * @return True if 'O' wins; false otherwise
+           */
+          private static boolean oWins(char[][] table) {
+              return isWinner(table, 'O');
+          }
+      
+          /**
+           * Checks to see ig player 'X' wins
+           *
+           * @param table The table to check
+           * @return True if 'X' wins; false otherwise
+           */
+          private static boolean xWins(char[][] table) {
+              return isWinner(table, 'X');
+          }
+      
+          /**
+           * Using the helper methods for finding a winner, this method takes in a table and a symbol
+           * to check if that symbol is a winner.
+           *
+           * @param table The table to be checked
+           * @param symbol The symbol to check in each method
+           * @return True if the symbol is found three time consecutively, false otherwise.
+           */
+          private static boolean isWinner(char[][] table, char symbol) {
+              return threeInARow(table, symbol) ||
+                      threeInACol(table, symbol) ||
+                      threeDiagonalBottomLeft(table, symbol) ||
+                      threeDiagonalTopLeft(table, symbol);
+          }
+      
+          /**
+           *
+           * @param table The table of 'X's and 'O's to be checked
+           * @param symbol Represents the 'X' or the 'O' to be checked
+           * @return True if there is three of the chosen symbol in a row, false otherwise
+           */
+          private static boolean threeInARow(char[][] table, char symbol) {
+              int consecutive;
+      
+              for (int row = 0; row < table.length; row++) {
+                  // Each time a new row starts, start the consecutive count again.
+                  consecutive = 0;
+                  for (int col = 0; col < table[row].length; col++) {
+      
+                      if (table[row][col] == symbol) {
+                          consecutive++;
+                      } else {
+                          // If the next symbol is not consecutive, set consecutive to O
+                          consecutive = 0;
+                      }
+                      // If there is
+                      // three in a row, return true
+                      if (consecutive == 3) return true;
+                  }
+              }
+              return false;
+          }
+      
+          /**
+           * Checks for three in each column and returns true if found, false otherwise.
+           *
+           * @param table The table to be checked for the symbol 3 times consecutively.
+           * @param symbol The symbol to be checked for
+           * @return True if the symbol is found 3 times consecutively, false otherwise.
+           */
+          private static boolean threeInACol(char[][] table, char symbol) {
+              int consecutive;
+              for (int col = 0; col < table[0].length; col++) {
+                  // Rest consecutive if checking a new column
+                  consecutive = 0;
+                  // Check each column
+                  for (int row = 0; row < table.length; row++) {
+                      if (table[row][col] == symbol) {
+                          consecutive++;
+                      } else {
+                          // Reset consecutive if the symbol is not found
+                          consecutive = 0;
+                      }
+                      // Return true if three in a row.
+                      if (consecutive ==3) return true;
+                  }
+              }
+              return false;
+          }
+      
+          /**
+           * Checks for three symbols in a row diagonally from top left to bottom right.
+           *
+           * @param table The table to check for the three symbols
+           * @param symbol The symbol to be checked for
+           * @return True if three consecutive symbols are found, false otherwise.
+           */
+          private static boolean threeDiagonalTopLeft(char[][] table, char symbol) {
+              int consecutive = 0;
+      
+              // Index is the same for the row and column
+              for (int i = 0; i < table.length; i++) {
+                  if (table[i][i] == symbol) {
+                      consecutive++;
+                  } else {
+                      // Reset consecutive if the symbol does not match
+                      consecutive = 0;
+                  }
+              }
+      
+              return consecutive == 3;
+          }
+      
+          /**
+           * Iterates from top right to bottom left of the matrix to check for 3 consecutive symbols.
+           *
+           * @param table The table to be checked
+           * @param symbol The symbol checked for
+           * @return True if three consecutive symbols, false otherwise.
+           */
+          private static boolean threeDiagonalBottomLeft(char[][] table, char symbol) {
+              int consecutive = 0;
+      
+      
+              for (int i = 0; i < table.length; i++) {
+                  // length of the table - 1 (as we index from 0) then minus the i to move backwards.
+                  if (table[table.length - 1- i][i] == symbol) {
+                      consecutive++;
+                  } else {
+                      consecutive = 0;
+                  }
+              }
+              return consecutive == 3;
+          }
+      
+      
+      }
+    learner_created: true
+  - name: src/tictactoe/PlayGame.java
+    visible: true
+    text: |
+      package tictactoe;
+      
+      public class PlayGame {
+          private static char[][] table;
+      
+          public static char[][] getTable() {
+              return table;
+          }
+      
+          public static void setTable(char[][] table) {
+              PlayGame.table = table;
+          }
+      
+          public static void updateUserMove() {
+              System.out.println("Please enter coordinates for your move. Choose between 1-3 for the " +
+                      "row and 1-3 for the column seperated by a space. Example 1 2 (1 is row, 2 in " +
+                      "column)");
+      
+      
+              boolean isValidMove = false; // Flag to keep the loop running
+              // Loop to get the coordinates from the user.
+              while (!isValidMove) {
+                  String userInput = UserInput.getUserInput().trim();
+                  int[] coordinates = parseInput(userInput);
+                  if (coordinates != null) {
+                      int row = coordinates[0];
+                      int col = coordinates[1];
+      
+                      // If the move is valid, stop the loop, update the table and print the table
+                      if (validateMove(row, col)) {
+                          isValidMove = true;
+                          makeMove(row, col);
+                          printTable();
+                      }
+                  }
+              }
+          }
+      
+          private static int[] parseInput(String move) {
+              // Parse down to two numbers for the move
+              String[] parts = move.split(" ");
+      
+              // If parts is greater than two, then it is incorrect
+              if (parts.length != 2) {
+                  System.err.println("You should enter exactly two numbers separated by a space!");
+                  return null;
+              }
+      
+              // If the parts cannot be converted to numbers, then it is incorrect
+              try {
+                  int row = Integer.parseInt(parts[0]);
+                  int col = Integer.parseInt(parts[1]);
+                  return new int[]{row, col};
+              } catch (NumberFormatException e) {
+                  System.err.println("You should enter numbers!");
+                  return null;
+              }
+          }
+          private static boolean validateMove(int row, int col) {
+              // If the coordinates are outside the grid, then it is incorrect
+              if ((row < 1 || row > 3) || (col < 1 || col > 3)) {
+                  System.err.println("Coordinates should be from 1 to 3!");
+                  return false;
+              }
+      
+              // Adjust the indexes of row and col for the 0 index
+              row -= 1;
+              col -= 1;
+              if (table[row][col] != '_' && table[row][col] != ' ') {
+                  System.err.println("This cell is occupied! Choose another one! ");
+                  return false;
+              }
+              return true;
+          }
+      
+          private static void makeMove(int row, int col) {
+              // Update move as player 'X'. The rows and columns are zero based indexes
+              table[row -1][col - 1] = 'X';
+      
+          }
+      
+          private static void printTable() {
+              System.out.println(CreateTable.createFormattedTable(table));
+          }
+      
+      
+      
+      }
+    learner_created: true
+  - name: src/tictactoe/PrintTable.java
+    visible: true
+    learner_created: true
+  - name: src/tictactoe/notes.txt
+    visible: true
+    learner_created: true
+  - name: src/tictactoe/GameState.java
+    visible: true
+    learner_created: true
 feedback_link: https://hyperskill.org/learn/step/5401#comment
-status: Unchecked
+status: Solved
+feedback:
+  message: Well done! You've finished the project. Select a new project on <a href="https://hyperskill.org/projects">Hyperskill</a>
+    to continue learning.
+  time: "Fri, 05 Jul 2024 21:14:49 UTC"
 record: -1
